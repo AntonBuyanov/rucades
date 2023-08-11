@@ -12,9 +12,10 @@ RuboCop::RakeTask.new
 require "rake/extensiontask"
 
 task build: :compile
+task spec: :compile
 
 Rake::ExtensionTask.new("rucades") do |ext|
   ext.lib_dir = "lib/rucades"
 end
 
-task default: %i[clobber compile spec rubocop]
+task default: %i[compile spec rubocop]

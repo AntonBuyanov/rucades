@@ -1,3 +1,7 @@
+# Copyright (c) 2023 Maxim [maxirmx] Samsonov (https://sw.consulting)
+# All rights reserved.
+# This file is a part of rucades
+
 name: Ruby
 
 on:
@@ -12,12 +16,35 @@ jobs:
     runs-on: ubuntu-latest
     name: Ruby ${{ matrix.ruby }}
     strategy:
+      fail-fast: false
       matrix:
         ruby:
+          - '3.0.6'
           - '3.1.4'
+          - '3.2.2'
 
     steps:
     - uses: actions/checkout@v3
+
+    - name: Install packages
+      run: |
+        sudo apt -y update
+        sudo apt -y install cmake build-essential libboost-all-dev unzip wget
+
+    - name: Install CSP and SDK
+      run: |
+        pushd sdk
+        tar xvf linux-amd64_deb.tgz
+        pushd linux-amd64_deb
+        sudo ./install.sh
+        sudo apt install ./lsb-cprocsp-devel_5.0*.deb
+        popd
+        tar xvf cades-linux-amd64.tar.gz
+        pushd cades-linux-amd64
+        sudo apt install ./cprocsp-pki-cades*.deb
+        popd
+        popd
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:

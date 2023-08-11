@@ -6,6 +6,7 @@
 /pkg/
 /spec/reports/
 /tmp/
+/sample/
 *.bundle
 *.so
 *.o
@@ -16,3 +17,6 @@ mkmf.log
 .rspec_status
 
 Gemfile.lock
+
+cades-linux-amd64/
+linux-amd64_deb/
