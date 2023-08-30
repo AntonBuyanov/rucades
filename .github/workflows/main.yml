@@ -2,7 +2,7 @@
 # All rights reserved.
 # This file is a part of rucades
 
-name: Ruby
+name: Build-and-test
 
 on:
   push:
