@@ -38,7 +38,27 @@ $srcs = [
   "rucades.cpp",
   "rucades_const.cpp",
   "rucades_tools.cpp",
-  "errormsg.cpp"
+  "errormsg.cpp",
+  "rucades_about.cpp",
+  "rucades_algorithm.cpp",
+  "rucades_attribute.cpp",
+  "rucades_attributes.cpp",
+  "rucades_basic_constraints.cpp",
+  "rucades_blobs.cpp",
+  "rucades_certificate.cpp",
+  "rucades_certificates.cpp",
+  "rucades_certificate_status.cpp",
+  "rucades_crl.cpp",
+  "rucades_eku.cpp",
+  "rucades_ekus.cpp",
+  "rucades_encoded_data.cpp",
+  "rucades_extended_key_usage.cpp",
+  "rucades_key_usage.cpp",
+  "rucades_oid.cpp",
+  "rucades_private_key.cpp",
+  "rucades_public_key.cpp",
+  "rucades_store.cpp",
+  "rucades_version.cpp"
 ]
 
 # rubocop:enable Style/GlobalVars

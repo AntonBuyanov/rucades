@@ -12,6 +12,7 @@
 *.o
 *.a
 mkmf.log
+.vscode/
 
 # rspec failure tracking
 .rspec_status

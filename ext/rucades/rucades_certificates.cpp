@@ -1,0 +1,134 @@
+// Copyright (c) 2023 Maxim [maxirmx] Samsonov (https://sw.consulting)
+// All rights reserved.
+// This file is a part of rucades
+
+#include <rice/rice.hpp>
+#include <rice/stl.hpp>
+
+#include "rucades.h"
+#include "rucades_certificate.h"
+#include "rucades_certificates.h"
+#include "rucades_store.h"
+
+using namespace Rice;
+using namespace CryptoPro::PKI::CAdES;
+
+namespace rucades {
+pre_rb_Certificates::pre_rb_Certificates(void):
+      m_pCppCadesImpl(boost::shared_ptr<CPPCadesCPCertificatesObject>(new CPPCadesCPCertificatesObject())) { }
+
+pre_rb_Certificates::pre_rb_Certificates(boost::shared_ptr<CPPCadesCPCertificatesObject> other):
+      m_pCppCadesImpl(other) { }
+
+long pre_rb_Certificates::get_count(void)
+{
+  unsigned int count = 0;
+  hr_method_check(m_pCppCadesImpl->Count(&count));
+  return count;
+}
+
+pre_rb_Certificate* pre_rb_Certificates::get_item(long index)
+{
+  boost::shared_ptr<CPPCadesCPCertificateObject> pCppCadesCertificate =
+                    boost::shared_ptr<CPPCadesCPCertificateObject>(new CPPCadesCPCertificateObject());
+  hr_method_check(m_pCppCadesImpl->Item(index, pCppCadesCertificate));
+  return new pre_rb_Certificate(pCppCadesCertificate);
+}
+
+pre_rb_Certificates* pre_rb_Certificates::internal_find_query_long(long type, long query, bool valid_only)
+{
+    CAPICOM_CERTIFICATE_FIND_TYPE Type = static_cast<CAPICOM_CERTIFICATE_FIND_TYPE>(type);
+    pre_rb_Certificates * res = nullptr;
+
+    switch (Type) {
+      case CAPICOM_CERTIFICATE_FIND_EXTENDED_PROPERTY:
+      case CAPICOM_CERTIFICATE_FIND_KEY_USAGE:
+      case CAPICOM_CERTIFICATE_FIND_EXTENSION:
+      case CAPICOM_CERTIFICATE_FIND_APPLICATION_POLICY:
+        {
+          BOOL bValidOnly = valid_only ? TRUE:FALSE;
+          FindCriteria findCriteria;
+          findCriteria.dwCriteriaFlag = FIND_CRITERIA_DWORD;
+          findCriteria.dword = query;
+          boost::shared_ptr<CPPCadesCPCertificatesObject> pCppCadesCertificates =
+                    boost::shared_ptr<CPPCadesCPCertificatesObject>(new CPPCadesCPCertificatesObject());
+          hr_method_check(m_pCppCadesImpl->Find(Type, &findCriteria, bValidOnly, pCppCadesCertificates));
+          res = new pre_rb_Certificates(pCppCadesCertificates);
+        }
+        break;
+      case CAPICOM_CERTIFICATE_FIND_SHA1_HASH:
+      case CAPICOM_CERTIFICATE_FIND_SUBJECT_NAME:
+      case CAPICOM_CERTIFICATE_FIND_ISSUER_NAME:
+      case CAPICOM_CERTIFICATE_FIND_ROOT_NAME:
+      case CAPICOM_CERTIFICATE_FIND_TEMPLATE_NAME:
+      case CAPICOM_CERTIFICATE_FIND_CERTIFICATE_POLICY:
+      case CAPICOM_CERTIFICATE_FIND_TIME_VALID:
+      case CAPICOM_CERTIFICATE_FIND_TIME_NOT_YET_VALID:
+      case CAPICOM_CERTIFICATE_FIND_TIME_EXPIRED:
+          break;
+      default:
+        throw std::invalid_argument("Invalid CERTIFICATE_FIND_TYPE");
+        break;
+    }
+    return res;
+}
+
+pre_rb_Certificates* pre_rb_Certificates::internal_find_query_string(long type, std::string query, bool valid_only)
+{
+    CAPICOM_CERTIFICATE_FIND_TYPE Type = static_cast<CAPICOM_CERTIFICATE_FIND_TYPE>(type);
+    BOOL bValidOnly = valid_only ? TRUE:FALSE;
+    FindCriteria findCriteria;
+    CryptoPro::CDateTime utcDate;
+
+    switch (Type) {
+      case CAPICOM_CERTIFICATE_FIND_SHA1_HASH:
+      case CAPICOM_CERTIFICATE_FIND_SUBJECT_NAME:
+      case CAPICOM_CERTIFICATE_FIND_ISSUER_NAME:
+      case CAPICOM_CERTIFICATE_FIND_ROOT_NAME:
+      case CAPICOM_CERTIFICATE_FIND_TEMPLATE_NAME:
+      case CAPICOM_CERTIFICATE_FIND_CERTIFICATE_POLICY:
+      case CAPICOM_CERTIFICATE_FIND_EXTENSION:
+      case CAPICOM_CERTIFICATE_FIND_APPLICATION_POLICY:
+        findCriteria.dwCriteriaFlag = FIND_CRITERIA_STRING;
+        findCriteria.str = CAtlString(query.c_str());
+        break;
+      case CAPICOM_CERTIFICATE_FIND_TIME_VALID:
+      case CAPICOM_CERTIFICATE_FIND_TIME_NOT_YET_VALID:
+      case CAPICOM_CERTIFICATE_FIND_TIME_EXPIRED:
+        if (query != "") {
+          try {
+            utcDate = CryptoPro::CDateTime(query.c_str());
+          }
+          catch (...) {
+            throw std::invalid_argument("Invalid Date/Time");
+          }
+        }
+        else {
+          utcDate = CryptoPro::CDateTime::Now();
+        }
+        findCriteria.dwCriteriaFlag = FIND_CRITERIA_DATE;
+        findCriteria.date = utcDate;
+      case CAPICOM_CERTIFICATE_FIND_EXTENDED_PROPERTY:
+      case CAPICOM_CERTIFICATE_FIND_KEY_USAGE:
+        return nullptr;
+      default:
+        throw std::invalid_argument("Invalid CERTIFICATE_FIND_TYPE");
+    }
+
+    boost::shared_ptr<CPPCadesCPCertificatesObject> pCppCadesCertificates =
+                    boost::shared_ptr<CPPCadesCPCertificatesObject>(new CPPCadesCPCertificatesObject());
+    hr_method_check(m_pCppCadesImpl->Find(Type, &findCriteria, bValidOnly, pCppCadesCertificates));
+    return new pre_rb_Certificates(pCppCadesCertificates);
+}
+
+void pre_rb_Certificates::define_ruby_class(void)
+{
+  Data_Type<pre_rb_Certificates> rb_cCertificates =
+    define_class<pre_rb_Certificates>("Certificates")
+    .define_constructor(Constructor<pre_rb_Certificates>())
+    .define_method("count", &pre_rb_Certificates::get_count)
+    .define_method("[]", &pre_rb_Certificates::get_item, Return().takeOwnership())
+    .define_method("internal_find_query_long", &pre_rb_Certificates::internal_find_query_long, Return().takeOwnership())
+    .define_method("internal_find_query_string", &pre_rb_Certificates::internal_find_query_string, Return().takeOwnership());
+}
+}

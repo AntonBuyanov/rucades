@@ -45,6 +45,10 @@ jobs:
         popd
         popd
 
+#    - name: Install test certificate
+#      run: |
+#        /opt/cprocsp/bin/amd64/cryptcp -createcert -dn "CN=test" -provtype 80 -cont '\\.\HDIMAGE\test' -ca https://cryptopro.ru/certsrv
+
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:

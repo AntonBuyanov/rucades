@@ -9,43 +9,18 @@
 #include "CPPCadesAbout.h"
 
 namespace rucades {
-class pre_rb_About: protected CryptoPro::PKI::CAdES::CPPCadesAboutObject {
+class pre_rb_About {
+  protected:
+    boost::shared_ptr<CryptoPro::PKI::CAdES::CPPCadesAboutObject> m_pCppCadesImpl;
   public:
-    pre_rb_About(void): CryptoPro::PKI::CAdES::CPPCadesAboutObject() { }
+    pre_rb_About(void);
+    unsigned int major_version(void);
+    unsigned int minor_version(void);
+    unsigned int build_version(void);
+    std::string version(void);
+    pre_rb_Version* plugin_version(void);
+    pre_rb_Version* csp_version(std::string prov_name, long prov_type);
 
-    unsigned int major_version(void) {
-      unsigned int version = 0;
-      hr_method_check(get_MajorVersion(&version));
-      return version;
-    }
-    unsigned int minor_version(void) {
-      unsigned int version = 0;
-      hr_method_check(get_MinorVersion(&version));
-      return version;
-    }
-    unsigned int build_version(void) {
-      unsigned int version = 0;
-      hr_method_check(get_BuildVersion(&version));
-      return version;
-    }
-    std::string version(void) {
-      CAtlString AtlVersion;
-      hr_method_check(get_Version(AtlVersion));
-      return AtlVersion.GetString();
-    }
-
-    pre_rb_Version* plugin_version(void) {
-      boost::shared_ptr<CryptoPro::PKI::CAdES::CPPVersionObject> p_version;
-      hr_method_check(get_PluginVersion(p_version));
-      return new pre_rb_Version(p_version);
-    }
-
-    pre_rb_Version* csp_version(std::string prov_name, long prov_type) {
-      boost::shared_ptr<CryptoPro::PKI::CAdES::CPPVersionObject> p_version;
-      CAtlString provName = CAtlString(CA2CT(CAtlStringA(prov_name.c_str()), CP_UTF8));
-
-      hr_method_check(get_CSPVersion(provName, prov_type, p_version));
-      return new pre_rb_Version(p_version);
-    }
+    static void define_ruby_class(void);
 };
 }
