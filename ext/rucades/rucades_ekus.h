@@ -18,9 +18,9 @@ class pre_rb_EKUs {
     pre_rb_EKUs(void);
     pre_rb_EKUs(boost::shared_ptr<CryptoPro::PKI::CAdES::CPPCadesCPEKUsObject> pCppCadesEKUs);
     long get_count(void);
-    pre_rb_EKU* get_item(long index);
+    pre_rb_EKU get_item(long index);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 
     friend class pre_rb_ExtendedKeyUsage;
 };

@@ -7,7 +7,7 @@
 RSpec.describe Rucades do
   describe "Blobs" do
     it "has constructor and getters" do
-      blobs = Blobs.new
+      blobs = Rucades::Blobs.new
       expect(blobs.count).to eq(0)
       expect { blobs[0] }.to raise_error(RuntimeError)
     end

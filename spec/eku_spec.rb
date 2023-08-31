@@ -7,7 +7,7 @@
 RSpec.describe Rucades do
   describe "EKU" do
     it "has constructor and getters/setters" do
-      eku = EKU.new
+      eku = Rucades::EKU.new
 
       eku.name = Rucades::CAPICOM_EKU_OTHER
       expect(eku.name).to eq(Rucades::CAPICOM_EKU_OTHER)

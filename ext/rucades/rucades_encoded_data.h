@@ -16,7 +16,7 @@ class pre_rb_EncodedData {
     std::string value(long format);
     std::string format(bool multiline);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 
     friend class pre_rb_PublicKey;
 };

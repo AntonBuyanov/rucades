@@ -25,10 +25,10 @@ bool pre_rb_CertificateStatus::result(void)
     return (bResult != 0);
 }
 
-void pre_rb_CertificateStatus::define_ruby_class(void)
+void pre_rb_CertificateStatus::define_ruby_class(VALUE module)
 {
     Data_Type<pre_rb_CertificateStatus> rb_cCertificateStatus =
-        define_class<pre_rb_CertificateStatus>("CertificateStatus")
+        define_class_under<pre_rb_CertificateStatus>(module, "CertificateStatus")
         .define_constructor(Constructor<pre_rb_CertificateStatus>())
         .define_method("result?", &pre_rb_CertificateStatus::result);
 }

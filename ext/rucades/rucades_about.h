@@ -18,9 +18,9 @@ class pre_rb_About {
     unsigned int minor_version(void);
     unsigned int build_version(void);
     std::string version(void);
-    pre_rb_Version* plugin_version(void);
-    pre_rb_Version* csp_version(std::string prov_name, long prov_type);
+    pre_rb_Version plugin_version(void);
+    pre_rb_Version csp_version(std::string prov_name, long prov_type);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 };
 }

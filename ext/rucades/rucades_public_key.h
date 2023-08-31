@@ -17,11 +17,11 @@ class pre_rb_PublicKey {
     pre_rb_PublicKey(void);
     pre_rb_PublicKey(boost::shared_ptr<CryptoPro::PKI::CAdES::CPPCadesCPPublicKeyObject> other);
     pre_rb_OID* get_algorithm(void);
-    pre_rb_EncodedData* get_encoded_key(void);
-    pre_rb_EncodedData* get_encoded_parameters(void);
+    pre_rb_EncodedData get_encoded_key(void);
+    pre_rb_EncodedData get_encoded_parameters(void);
     long get_length(void);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 
     friend class pre_rb_Certificate;
 };

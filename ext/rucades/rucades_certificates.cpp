@@ -27,18 +27,18 @@ long pre_rb_Certificates::get_count(void)
   return count;
 }
 
-pre_rb_Certificate* pre_rb_Certificates::get_item(long index)
+pre_rb_Certificate pre_rb_Certificates::get_item(long index)
 {
   boost::shared_ptr<CPPCadesCPCertificateObject> pCppCadesCertificate =
                     boost::shared_ptr<CPPCadesCPCertificateObject>(new CPPCadesCPCertificateObject());
   hr_method_check(m_pCppCadesImpl->Item(index, pCppCadesCertificate));
-  return new pre_rb_Certificate(pCppCadesCertificate);
+  return pre_rb_Certificate(pCppCadesCertificate);
 }
 
-pre_rb_Certificates* pre_rb_Certificates::internal_find_query_long(long type, long query, bool valid_only)
+pre_rb_Certificates pre_rb_Certificates::internal_find_query_long(long type, long query, bool valid_only)
 {
     CAPICOM_CERTIFICATE_FIND_TYPE Type = static_cast<CAPICOM_CERTIFICATE_FIND_TYPE>(type);
-    pre_rb_Certificates * res = nullptr;
+    pre_rb_Certificates res = pre_rb_Certificates();
 
     switch (Type) {
       case CAPICOM_CERTIFICATE_FIND_EXTENDED_PROPERTY:
@@ -53,7 +53,7 @@ pre_rb_Certificates* pre_rb_Certificates::internal_find_query_long(long type, lo
           boost::shared_ptr<CPPCadesCPCertificatesObject> pCppCadesCertificates =
                     boost::shared_ptr<CPPCadesCPCertificatesObject>(new CPPCadesCPCertificatesObject());
           hr_method_check(m_pCppCadesImpl->Find(Type, &findCriteria, bValidOnly, pCppCadesCertificates));
-          res = new pre_rb_Certificates(pCppCadesCertificates);
+          res = pre_rb_Certificates(pCppCadesCertificates);
         }
         break;
       case CAPICOM_CERTIFICATE_FIND_SHA1_HASH:
@@ -73,7 +73,7 @@ pre_rb_Certificates* pre_rb_Certificates::internal_find_query_long(long type, lo
     return res;
 }
 
-pre_rb_Certificates* pre_rb_Certificates::internal_find_query_string(long type, std::string query, bool valid_only)
+pre_rb_Certificates pre_rb_Certificates::internal_find_query_string(long type, std::string query, bool valid_only)
 {
     CAPICOM_CERTIFICATE_FIND_TYPE Type = static_cast<CAPICOM_CERTIFICATE_FIND_TYPE>(type);
     BOOL bValidOnly = valid_only ? TRUE:FALSE;
@@ -110,7 +110,7 @@ pre_rb_Certificates* pre_rb_Certificates::internal_find_query_string(long type, 
         findCriteria.date = utcDate;
       case CAPICOM_CERTIFICATE_FIND_EXTENDED_PROPERTY:
       case CAPICOM_CERTIFICATE_FIND_KEY_USAGE:
-        return nullptr;
+        return pre_rb_Certificates();
       default:
         throw std::invalid_argument("Invalid CERTIFICATE_FIND_TYPE");
     }
@@ -118,17 +118,17 @@ pre_rb_Certificates* pre_rb_Certificates::internal_find_query_string(long type, 
     boost::shared_ptr<CPPCadesCPCertificatesObject> pCppCadesCertificates =
                     boost::shared_ptr<CPPCadesCPCertificatesObject>(new CPPCadesCPCertificatesObject());
     hr_method_check(m_pCppCadesImpl->Find(Type, &findCriteria, bValidOnly, pCppCadesCertificates));
-    return new pre_rb_Certificates(pCppCadesCertificates);
+    return pre_rb_Certificates(pCppCadesCertificates);
 }
 
-void pre_rb_Certificates::define_ruby_class(void)
+void pre_rb_Certificates::define_ruby_class(VALUE module)
 {
   Data_Type<pre_rb_Certificates> rb_cCertificates =
-    define_class<pre_rb_Certificates>("Certificates")
+    define_class_under<pre_rb_Certificates>(module, "Certificates")
     .define_constructor(Constructor<pre_rb_Certificates>())
     .define_method("count", &pre_rb_Certificates::get_count)
-    .define_method("[]", &pre_rb_Certificates::get_item, Return().takeOwnership())
-    .define_method("internal_find_query_long", &pre_rb_Certificates::internal_find_query_long, Return().takeOwnership())
-    .define_method("internal_find_query_string", &pre_rb_Certificates::internal_find_query_string, Return().takeOwnership());
+    .define_method("[]", &pre_rb_Certificates::get_item)
+    .define_method("internal_find_query_long", &pre_rb_Certificates::internal_find_query_long)
+    .define_method("internal_find_query_string", &pre_rb_Certificates::internal_find_query_string);
 }
 }

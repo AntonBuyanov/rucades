@@ -46,10 +46,10 @@ std::string pre_rb_Version::to_s(void)
   return AtlVersion.GetString();
 }
 
-void pre_rb_Version::define_ruby_class(void)
+void pre_rb_Version::define_ruby_class(VALUE module)
 {
   Data_Type<pre_rb_Version> rb_cVersion =
-    define_class<pre_rb_Version>("Version")
+    define_class_under<pre_rb_Version>(module, "Version")
     .define_constructor(Constructor<pre_rb_Version>())
     .define_method("major_version", &pre_rb_Version::major_version)
     .define_method("minor_version", &pre_rb_Version::minor_version)

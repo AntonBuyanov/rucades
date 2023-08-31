@@ -32,25 +32,28 @@ class pre_rb_Certificate {
     std::string get_valid_from_date(void);
     std::string get_valid_to_date(void);
 
-    pre_rb_PrivateKey*          get_private_key(void);
-    pre_rb_PublicKey*           get_public_key(void);
-    pre_rb_KeyUsage*            get_key_usage(void);
-    pre_rb_ExtendedKeyUsage*    get_extended_key_usage(void);
-    pre_rb_BasicConstraints*    get_basic_constraints(void);
-    pre_rb_CertificateStatus*   get_certificate_status(void);     //IsValid
+    pre_rb_PrivateKey          get_private_key(void);
+    pre_rb_PublicKey           get_public_key(void);
+    pre_rb_KeyUsage            get_key_usage(void);
+    pre_rb_ExtendedKeyUsage    get_extended_key_usage(void);
+    pre_rb_BasicConstraints    get_basic_constraints(void);
+    pre_rb_CertificateStatus   get_certificate_status(void);     //aka IsValid
 
     std::string get_info(long type);
     bool has_private_key(void);
-    /// ???? {"FindPrivateKey", (PyCFunction)Certificate_findPrivateKey, METH_VARARGS, "findPrivateKey"},
 
     std::string crt_export(long type);
     void crt_import (std::string crt);
     void additional_store(pre_rb_Store& store);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
     static void extend_ruby_class(void);
 
     friend class pre_rb_Certificates;
+    friend class pre_rb_Recipients;
+    friend class pre_rb_RawSignature;
+    friend class pre_rb_Signer;
     friend class pre_rb_Store;
+    friend class pre_rb_SymmetricAlgorithm;
 };
 }

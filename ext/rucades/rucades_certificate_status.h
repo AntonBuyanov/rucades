@@ -16,7 +16,7 @@ class pre_rb_CertificateStatus {
     pre_rb_CertificateStatus(boost::shared_ptr<CryptoPro::PKI::CAdES::CPPCadesCPCertificateStatusObject> other);
     bool result(void);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 
     friend class pre_rb_Certificate;
 };

@@ -69,10 +69,10 @@ void pre_rb_PrivateKey::change_pin(void)
     hr_method_check(m_pCppCadesImpl->ChangePin());
 }
 
-void pre_rb_PrivateKey::define_ruby_class(void)
+void pre_rb_PrivateKey::define_ruby_class(VALUE module)
 {
   Data_Type<pre_rb_PrivateKey> rb_cPrivateKey =
-    define_class<pre_rb_PrivateKey>("PrivateKey")
+    define_class_under<pre_rb_PrivateKey>(module, "PrivateKey")
     .define_constructor(Constructor<pre_rb_PrivateKey>())
     .define_method("container_name", &pre_rb_PrivateKey::get_container_name)
     .define_method("unique_container_name", &pre_rb_PrivateKey::get_unique_container_name)

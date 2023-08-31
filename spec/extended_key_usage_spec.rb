@@ -7,7 +7,7 @@
 RSpec.describe Rucades do
   describe "ExtendedKeyUsage" do
     it "has constructor and getters" do
-      kusage = ExtendedKeyUsage.new
+      kusage = Rucades::ExtendedKeyUsage.new
       expect(kusage.present?).to be(false)
       expect(kusage.critical?).to be(false)
       expect(kusage.ekus.count).to eq(0)

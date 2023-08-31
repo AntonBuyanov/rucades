@@ -16,6 +16,9 @@ namespace rucades {
 pre_rb_Blobs::pre_rb_Blobs(void):
       m_pCppCadesImpl(boost::shared_ptr<CPPCadesCPBlobsObject>(new CPPCadesCPBlobsObject())) { }
 
+pre_rb_Blobs::pre_rb_Blobs(boost::shared_ptr<CPPCadesCPBlobsObject> other):
+        m_pCppCadesImpl(other) { }
+
 long pre_rb_Blobs::get_count(void){
     DWORD count = 0;
     hr_method_check(m_pCppCadesImpl->get_Count(&count));
@@ -32,10 +35,10 @@ std::string pre_rb_Blobs::get_item(long index)
     return std::string(sValue.GetString());
 }
 
-void pre_rb_Blobs::define_ruby_class(void)
+void pre_rb_Blobs::define_ruby_class(VALUE module)
 {
   Data_Type<pre_rb_Blobs> rb_cBlobs =
-    define_class<pre_rb_Blobs>("Blobs")
+    define_class_under<pre_rb_Blobs>(module, "Blobs")
     .define_constructor(Constructor<pre_rb_Blobs>())
     .define_method("count", &pre_rb_Blobs::get_count)
     .define_method("[]", &pre_rb_Blobs::get_item);

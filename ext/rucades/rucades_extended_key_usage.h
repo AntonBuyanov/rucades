@@ -18,9 +18,9 @@ class pre_rb_ExtendedKeyUsage {
     pre_rb_ExtendedKeyUsage(boost::shared_ptr<CryptoPro::PKI::CAdES::CPPCadesCPExtendedKeyUsageObject> other);
     bool is_present(void);
     bool is_critical(void);
-    pre_rb_EKUs* get_ekus(void);
+    pre_rb_EKUs get_ekus(void);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 
     friend class pre_rb_Certificate;
 };

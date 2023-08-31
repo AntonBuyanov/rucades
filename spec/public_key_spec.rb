@@ -9,7 +9,7 @@ KEY_VALUE = "BEBP8nfp8ferXuJR6JbfMISh9DhBhGRMUpP05gMaLbyEWLsV2clyYOpo8oSIHbF+\nz
 RSpec.describe Rucades do
   describe "PublicKey" do
     it "has constructor and getters" do
-      pkey = PublicKey.new
+      pkey = Rucades::PublicKey.new
 
       expect(pkey.length).to eq(0)
       expect(pkey.algorithm.name).to eq(Rucades::CAPICOM_OID_OTHER)
@@ -18,7 +18,7 @@ RSpec.describe Rucades do
     end
 
     it "holds real values" do
-      crt = Certificate.new
+      crt = Rucades::Certificate.new
       File.open(File.join(__dir__, "certificates", "certusr.cer"), "rb") do |f|
         crt.import(f.read)
       end

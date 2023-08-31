@@ -7,7 +7,7 @@
 RSpec.describe Rucades do
   describe "CerificateStatus" do
     it "has constructor and getter" do
-      certstatus = CertificateStatus.new
+      certstatus = Rucades::CertificateStatus.new
       expect(certstatus.result?).to be(false)
     end
   end

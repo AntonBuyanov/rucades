@@ -24,7 +24,7 @@ class pre_rb_PrivateKey {
     void set_key_pin(std::string pin);
     void change_pin(void);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 
     friend class pre_rb_Certificate;
 };

@@ -22,7 +22,7 @@ class pre_rb_CRL {
     void crl_import(std::string& crl);
     std::string crl_export(long type);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 
     friend class pre_rb_Store;
 };

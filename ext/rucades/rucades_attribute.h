@@ -15,7 +15,7 @@ class pre_rb_Attribute {
   public:
     pre_rb_Attribute(void);
     pre_rb_Attribute(boost::shared_ptr<CryptoPro::PKI::CAdES::CPPCadesCPAttributeObject> other);
-    pre_rb_OID* get_OID(void);
+    pre_rb_OID get_OID(void);
     std::string get_value(void);
     void set_value(std::string val);
     long get_name(void);
@@ -23,7 +23,7 @@ class pre_rb_Attribute {
     long get_value_encoding(void);
     void set_value_encoding(long enc);
 
-    static void define_ruby_class();
+    static void define_ruby_class(VALUE module);
 
     friend class pre_rb_Attributes;
 };

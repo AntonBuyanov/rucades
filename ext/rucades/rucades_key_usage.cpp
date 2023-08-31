@@ -95,10 +95,10 @@ bool pre_rb_KeyUsage::is_decipher_only_enabled(void)
     return (bVal != 0);
 }
 
-void pre_rb_KeyUsage::define_ruby_class(void)
+void pre_rb_KeyUsage::define_ruby_class(VALUE module)
 {
   Data_Type<pre_rb_KeyUsage> rb_cKeyUsage =
-    define_class<pre_rb_KeyUsage>("KeyUsage")
+    define_class_under<pre_rb_KeyUsage>(module, "KeyUsage")
     .define_constructor(Constructor<pre_rb_KeyUsage>())
     .define_method("present?", &pre_rb_KeyUsage::is_present)
     .define_method("critical?", &pre_rb_KeyUsage::is_critical)

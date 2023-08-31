@@ -68,10 +68,10 @@ std::string pre_rb_CRL::crl_export(long type)
             std::string(reinterpret_cast<const char *>(blobCRL.pbData()));
 }
 
-void pre_rb_CRL::define_ruby_class(void)
+void pre_rb_CRL::define_ruby_class(VALUE module)
 {
   Data_Type<pre_rb_CRL> rb_cCRL =
-    define_class<pre_rb_CRL>("CRL")
+    define_class_under<pre_rb_CRL>(module, "CRL")
     .define_constructor(Constructor<pre_rb_CRL>())
     .define_method("auth_key_id", &pre_rb_CRL::get_auth_key_id)
     .define_method("issuer_name", &pre_rb_CRL::get_issuer_name)

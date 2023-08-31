@@ -26,7 +26,7 @@ class pre_rb_KeyUsage {
     bool is_encipher_only_enabled(void);
     bool is_decipher_only_enabled(void);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 
     friend class pre_rb_Certificate;
 };

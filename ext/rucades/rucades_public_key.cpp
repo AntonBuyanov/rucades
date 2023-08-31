@@ -25,17 +25,17 @@ pre_rb_OID* pre_rb_PublicKey::get_algorithm(void)
     return pOID;
 }
 
-pre_rb_EncodedData* pre_rb_PublicKey::get_encoded_key(void)
+pre_rb_EncodedData pre_rb_PublicKey::get_encoded_key(void)
 {
-    pre_rb_EncodedData* pEncodedData = new pre_rb_EncodedData();
-    hr_method_check(m_pCppCadesImpl->get_EncodedKey(pEncodedData->m_pCppCadesImpl));
+    pre_rb_EncodedData pEncodedData;
+    hr_method_check(m_pCppCadesImpl->get_EncodedKey(pEncodedData.m_pCppCadesImpl));
     return pEncodedData;
 }
 
-pre_rb_EncodedData* pre_rb_PublicKey::get_encoded_parameters(void)
+pre_rb_EncodedData pre_rb_PublicKey::get_encoded_parameters(void)
 {
-    pre_rb_EncodedData* pEncodedData = new pre_rb_EncodedData();
-    hr_method_check(m_pCppCadesImpl->get_EncodedParameters(pEncodedData->m_pCppCadesImpl));
+    pre_rb_EncodedData pEncodedData;
+    hr_method_check(m_pCppCadesImpl->get_EncodedParameters(pEncodedData.m_pCppCadesImpl));
     return pEncodedData;
 }
 
@@ -46,14 +46,14 @@ long pre_rb_PublicKey::get_length(void)
     return dwLen;
 }
 
-void pre_rb_PublicKey::define_ruby_class(void)
+void pre_rb_PublicKey::define_ruby_class(VALUE module)
 {
   Data_Type<pre_rb_PublicKey> rb_cPublicKey =
-    define_class<pre_rb_PublicKey>("PublicKey")
+    define_class_under<pre_rb_PublicKey>(module, "PublicKey")
     .define_constructor(Constructor<pre_rb_PublicKey>())
-    .define_method("algorithm", &pre_rb_PublicKey::get_algorithm, Return().takeOwnership())
-    .define_method("encoded_key", &pre_rb_PublicKey::get_encoded_key, Return().takeOwnership())
-    .define_method("encoded_parameters", &pre_rb_PublicKey::get_encoded_parameters, Return().takeOwnership())
+    .define_method("algorithm", &pre_rb_PublicKey::get_algorithm)
+    .define_method("encoded_key", &pre_rb_PublicKey::get_encoded_key)
+    .define_method("encoded_parameters", &pre_rb_PublicKey::get_encoded_parameters)
     .define_method("length", &pre_rb_PublicKey::get_length);
 }
 }

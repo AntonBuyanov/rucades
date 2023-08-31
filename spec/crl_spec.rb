@@ -9,12 +9,12 @@ require "tempfile"
 RSpec.describe Rucades do
   describe "CRL" do
     it "has constructor" do
-      crl = CRL.new
+      crl = Rucades::CRL.new
       expect { crl.import("") }.to raise_error(RuntimeError)
     end
 
     it "has import and export methods" do
-      crl = CRL.new
+      crl = Rucades::CRL.new
       File.open(File.join(__dir__, "certificates", "certcrl.p7b.crl"), "rb") do |f|
         crl.import(f.read)
         f.rewind
@@ -40,7 +40,7 @@ RSpec.describe Rucades do
     end
 
     it "has issuer_name methods" do
-      crl = CRL.new
+      crl = Rucades::CRL.new
       File.open(File.join(__dir__, "certificates", "certcrl.p7b.crl"), "rb") do |f|
         crl.import(f.read)
       end
@@ -48,7 +48,7 @@ RSpec.describe Rucades do
     end
 
     it "has auth_key_id methods" do
-      crl = CRL.new
+      crl = Rucades::CRL.new
       File.open(File.join(__dir__, "certificates", "certcrl.p7b.crl"), "rb") do |f|
         crl.import(f.read)
       end
@@ -56,7 +56,7 @@ RSpec.describe Rucades do
     end
 
     it "has next_update methods" do
-      crl = CRL.new
+      crl = Rucades::CRL.new
       File.open(File.join(__dir__, "certificates", "certcrl.p7b.crl"), "rb") do |f|
         crl.import(f.read)
       end
@@ -64,7 +64,7 @@ RSpec.describe Rucades do
     end
 
     it "has this_update methods" do
-      crl = CRL.new
+      crl = Rucades::CRL.new
       File.open(File.join(__dir__, "certificates", "certcrl.p7b.crl"), "rb") do |f|
         crl.import(f.read)
       end
@@ -72,7 +72,7 @@ RSpec.describe Rucades do
     end
 
     it "has thumbprint methods" do
-      crl = CRL.new
+      crl = Rucades::CRL.new
       File.open(File.join(__dir__, "certificates", "certcrl.p7b.crl"), "rb") do |f|
         crl.import(f.read)
       end

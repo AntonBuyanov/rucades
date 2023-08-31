@@ -19,15 +19,16 @@ class pre_rb_Store {
     pre_rb_Store(void);
 
     std::string get_name(void);
-    pre_rb_Certificates* get_certificates(void);
+    pre_rb_Certificates get_certificates(void);
     long get_location(void);
     void open(long location, std::string& name, long mode);
     void close(void);
     void add(pre_rb_Certificate& cert);
     void add_crl(pre_rb_CRL& crl);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 
     friend class pre_rb_Certificate;
+    friend class pre_rb_SignedData;
 };
 }
