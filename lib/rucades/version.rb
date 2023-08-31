@@ -5,5 +5,5 @@
 # This file is a part of rucades
 
 module Rucades
-  VERSION = "0.2.0"
+  VERSION = "0.9.0"
 end
