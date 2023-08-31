@@ -9,7 +9,7 @@ RSpec.describe Rucades do
     it "maintains consistent name, value and friendly name" do
       # Можно задать любой из аттрибутов (name, friendly_name, value)
       # Два другие будут синхронизированы
-      oid = OID.new
+      oid = Rucades::OID.new
       oid.name = Rucades::CAPICOM_OID_BASIC_CONSTRAINTS_EXTENSION
       expect(oid.value).to eq("2.5.29.10")
       expect(oid.friendly_name).to eq("Основные ограничения")
@@ -23,7 +23,7 @@ RSpec.describe Rucades do
       expect(oid.friendly_name).to eq("Основные ограничения")
     end
     it "throws an exception on invalid attribute value" do
-      oid = OID.new
+      oid = Rucades::OID.new
       expect { oid.name = 1234 }.to raise_error(RuntimeError)
       expect { oid.friendly_name = "Туфта какая-то" }.to raise_error(RuntimeError)
 

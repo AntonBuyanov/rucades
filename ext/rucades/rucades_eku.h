@@ -19,7 +19,7 @@ class pre_rb_EKU {
     std::string get_oid(void);
     void set_oid(std::string& sFriendlyName);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 
     friend class pre_rb_EKUs;
 };

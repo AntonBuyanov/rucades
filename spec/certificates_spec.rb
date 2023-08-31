@@ -7,7 +7,7 @@
 RSpec.describe Rucades do
   describe "Certificates" do
     it "has constructor and getters" do
-      certificates = Certificates.new
+      certificates = Rucades::Certificates.new
       expect(certificates.count).to eq(0)
       expect { certificates[0] }.to raise_error(RuntimeError)
     end

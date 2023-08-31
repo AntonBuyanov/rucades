@@ -55,10 +55,10 @@ void pre_rb_OID::set_friendly_name(std::string& sFriendlyName)
   hr_method_check(m_pCppCadesImpl->put_FriendlyName(CAtlStringA(sFriendlyName.c_str())));
 }
 
-void pre_rb_OID::define_ruby_class(void)
+void pre_rb_OID::define_ruby_class(VALUE module)
 {
   Data_Type<pre_rb_OID> rb_cOID =
-    define_class<pre_rb_OID>("OID")
+    define_class_under<pre_rb_OID>(module, "OID")
     .define_constructor(Constructor<pre_rb_OID>())
     .define_method("name", &pre_rb_OID::get_name)
     .define_method("name=", &pre_rb_OID::set_name)

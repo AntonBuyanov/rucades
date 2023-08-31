@@ -7,6 +7,8 @@
 require_relative "rucades/version"
 require_relative "rucades/rucades"
 
+# Rucades module
+# Some staff on top of C++ bindings
 module Rucades
   # Polyfill for Certificates.find
   class Certificates

@@ -7,7 +7,7 @@
 RSpec.describe Rucades do
   describe "KeyUsage" do
     it "has constructor and getters" do
-      kusage = KeyUsage.new
+      kusage = Rucades::KeyUsage.new
       expect(kusage.present?).to be(false)
       expect(kusage.critical?).to be(false)
       expect(kusage.digital_ignature_enabled?).to be(false)

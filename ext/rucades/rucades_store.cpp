@@ -22,11 +22,11 @@ std::string pre_rb_Store::get_name(void)
     return std::string(sName.GetString());
 }
 
-pre_rb_Certificates* pre_rb_Store::get_certificates(void)
+pre_rb_Certificates pre_rb_Store::get_certificates(void)
 {
     boost::shared_ptr<CryptoPro::PKI::CAdES::CPPCadesCPCertificatesObject> pCertificates;
     hr_method_check(m_pCppCadesImpl->get_Certificates(pCertificates));
-    return new pre_rb_Certificates(pCertificates);
+    return pre_rb_Certificates(pCertificates);
 }
 
 long pre_rb_Store::get_location(void)
@@ -59,13 +59,13 @@ void pre_rb_Store::add_crl(pre_rb_CRL& crl)
     hr_method_check(m_pCppCadesImpl->AddCRL(crl.m_pCppCadesImpl));
 }
 
-void pre_rb_Store::define_ruby_class(void)
+void pre_rb_Store::define_ruby_class(VALUE module)
 {
     Data_Type<pre_rb_Store> rb_cStore =
-        define_class<pre_rb_Store>("Store")
+        define_class_under<pre_rb_Store>(module, "Store")
         .define_constructor(Constructor<pre_rb_Store>())
         .define_method("name", &pre_rb_Store::get_name)
-        .define_method("certificates", &pre_rb_Store::get_certificates, Return().takeOwnership())
+        .define_method("certificates", &pre_rb_Store::get_certificates)
         .define_method("location", &pre_rb_Store::get_location)
         .define_method("open", &pre_rb_Store::open,
                         Arg("location") = static_cast<long>(CADESCOM_CURRENT_USER_STORE),

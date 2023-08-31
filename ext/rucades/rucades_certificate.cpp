@@ -74,45 +74,45 @@ std::string pre_rb_Certificate::get_valid_to_date(void)
     return std::string(strProxyDate.c_str());
 }
 
-pre_rb_PrivateKey* pre_rb_Certificate::get_private_key(void)
+pre_rb_PrivateKey pre_rb_Certificate::get_private_key(void)
 {
-    pre_rb_PrivateKey* pPrivateKey = new pre_rb_PrivateKey();
-    hr_method_check(m_pCppCadesImpl->PrivateKey(pPrivateKey->m_pCppCadesImpl));
+    pre_rb_PrivateKey pPrivateKey;
+    hr_method_check(m_pCppCadesImpl->PrivateKey(pPrivateKey.m_pCppCadesImpl));
     return pPrivateKey;
 }
 
-pre_rb_PublicKey* pre_rb_Certificate::get_public_key(void)
+pre_rb_PublicKey pre_rb_Certificate::get_public_key(void)
 {
-    pre_rb_PublicKey* pPublicKey = new pre_rb_PublicKey();
-    hr_method_check(m_pCppCadesImpl->PublicKey(pPublicKey->m_pCppCadesImpl));
+    pre_rb_PublicKey pPublicKey;
+    hr_method_check(m_pCppCadesImpl->PublicKey(pPublicKey.m_pCppCadesImpl));
     return pPublicKey;
 }
 
-pre_rb_KeyUsage* pre_rb_Certificate::get_key_usage(void)
+pre_rb_KeyUsage pre_rb_Certificate::get_key_usage(void)
 {
-    pre_rb_KeyUsage* pKeyUsage = new pre_rb_KeyUsage();
-    hr_method_check(m_pCppCadesImpl->KeyUsage(pKeyUsage->m_pCppCadesImpl));
+    pre_rb_KeyUsage pKeyUsage;
+    hr_method_check(m_pCppCadesImpl->KeyUsage(pKeyUsage.m_pCppCadesImpl));
     return pKeyUsage;
 }
 
-pre_rb_ExtendedKeyUsage* pre_rb_Certificate::get_extended_key_usage(void)
+pre_rb_ExtendedKeyUsage pre_rb_Certificate::get_extended_key_usage(void)
 {
-    pre_rb_ExtendedKeyUsage* pExtendedKeyUsage = new pre_rb_ExtendedKeyUsage();
-    hr_method_check(m_pCppCadesImpl->ExtendedKeyUsage(pExtendedKeyUsage->m_pCppCadesImpl));
+    pre_rb_ExtendedKeyUsage pExtendedKeyUsage;
+    hr_method_check(m_pCppCadesImpl->ExtendedKeyUsage(pExtendedKeyUsage.m_pCppCadesImpl));
     return pExtendedKeyUsage;
 }
 
-pre_rb_BasicConstraints*  pre_rb_Certificate::get_basic_constraints(void)
+pre_rb_BasicConstraints  pre_rb_Certificate::get_basic_constraints(void)
 {
-    pre_rb_BasicConstraints* pBasicConstraints = new pre_rb_BasicConstraints();
-    hr_method_check(m_pCppCadesImpl->BasicConstraints(pBasicConstraints->m_pCppCadesImpl));
+    pre_rb_BasicConstraints pBasicConstraints;
+    hr_method_check(m_pCppCadesImpl->BasicConstraints(pBasicConstraints.m_pCppCadesImpl));
     return pBasicConstraints;
 }
 
-pre_rb_CertificateStatus* pre_rb_Certificate::get_certificate_status(void)
+pre_rb_CertificateStatus pre_rb_Certificate::get_certificate_status(void)
 {
-    pre_rb_CertificateStatus* pCertificateStatus = new pre_rb_CertificateStatus();
-    hr_method_check(m_pCppCadesImpl->IsValid(pCertificateStatus->m_pCppCadesImpl));
+    pre_rb_CertificateStatus pCertificateStatus;
+    hr_method_check(m_pCppCadesImpl->IsValid(pCertificateStatus.m_pCppCadesImpl));
     return pCertificateStatus;
 }
 
@@ -153,10 +153,10 @@ void pre_rb_Certificate::additional_store(pre_rb_Store& store)
 }
 
 static Data_Type<pre_rb_Certificate> rb_cCertificate;
-void pre_rb_Certificate::define_ruby_class(void)
+void pre_rb_Certificate::define_ruby_class(VALUE module)
 {
     rb_cCertificate =
-        define_class<pre_rb_Certificate>("Certificate")
+        define_class_under<pre_rb_Certificate>(module, "Certificate")
         .define_constructor(Constructor<pre_rb_Certificate>())
         .define_method("subject_name", &pre_rb_Certificate::get_subject_name)
         .define_method("issuer_name", &pre_rb_Certificate::get_issuer_name)
@@ -165,12 +165,12 @@ void pre_rb_Certificate::define_ruby_class(void)
         .define_method("version", &pre_rb_Certificate::get_version)
         .define_method("valid_from_date", &pre_rb_Certificate::get_valid_from_date)
         .define_method("valid_to_date", &pre_rb_Certificate::get_valid_to_date)
-        .define_method("private_key", &pre_rb_Certificate::get_private_key, Return().takeOwnership())
-        .define_method("public_key", &pre_rb_Certificate::get_public_key, Return().takeOwnership())
-        .define_method("key_usage", &pre_rb_Certificate::get_key_usage, Return().takeOwnership())
-        .define_method("extended_key_usage", &pre_rb_Certificate::get_extended_key_usage, Return().takeOwnership())
-        .define_method("basic_constraints", &pre_rb_Certificate::get_basic_constraints, Return().takeOwnership())
-        .define_method("cerificate_status", &pre_rb_Certificate::get_certificate_status, Return().takeOwnership())
+        .define_method("private_key", &pre_rb_Certificate::get_private_key)
+        .define_method("public_key", &pre_rb_Certificate::get_public_key)
+        .define_method("key_usage", &pre_rb_Certificate::get_key_usage)
+        .define_method("extended_key_usage", &pre_rb_Certificate::get_extended_key_usage)
+        .define_method("basic_constraints", &pre_rb_Certificate::get_basic_constraints)
+        .define_method("cerificate_status", &pre_rb_Certificate::get_certificate_status)
         .define_method("import", &pre_rb_Certificate::crt_import)
         .define_method("export", &pre_rb_Certificate::crt_export)
         .define_method("has_private_key?", &pre_rb_Certificate::has_private_key);

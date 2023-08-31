@@ -41,10 +41,10 @@ void pre_rb_EKU::set_oid(std::string& oid)
   hr_method_check(m_pCppCadesImpl->put_OID(sOID));
 }
 
-void pre_rb_EKU::define_ruby_class(void)
+void pre_rb_EKU::define_ruby_class(VALUE module)
 {
   Data_Type<pre_rb_EKU> rb_cEKU =
-    define_class<pre_rb_EKU>("EKU")
+    define_class_under<pre_rb_EKU>(module, "EKU")
     .define_constructor(Constructor<pre_rb_EKU>())
     .define_method("name", &pre_rb_EKU::get_name)
     .define_method("name=", &pre_rb_EKU::set_name)

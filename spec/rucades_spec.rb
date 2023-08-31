@@ -15,7 +15,7 @@ RSpec.describe Rucades do
     # Version cades object is an entity that you are not supposed to create directly
     # If created this way it reports random values, so we just check that methods exist
     it "has Version class" do
-      v = Version.new
+      v = Rucades::Version.new
       v.to_s
       v.major_version
       v.minor_version

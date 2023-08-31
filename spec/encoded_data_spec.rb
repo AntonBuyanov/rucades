@@ -7,7 +7,7 @@
 RSpec.describe Rucades do
   describe "EncodedData" do
     it "has constructor and getters" do
-      encdata = EncodedData.new
+      encdata = Rucades::EncodedData.new
 
       # Looks like format is not implemented
       expect { encdata.format(true) }.to raise_error(RuntimeError, "Not implemented. (0x80004001)")

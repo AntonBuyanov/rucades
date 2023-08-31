@@ -6,11 +6,11 @@
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe Rucades do
-  describe "About" do
+  describe "Rucades.About" do
     # This is the real version
     # It may change so we test it for consistency
     it "has a real version available through About class" do
-      a = About.new
+      a = Rucades::About.new
       v = a.version
       puts "\t\tSDK version: #{v}"
       i = v.split(".")
@@ -20,7 +20,7 @@ RSpec.describe Rucades do
     end
 
     it "has plugin version available through About class" do
-      a = About.new
+      a = Rucades::About.new
       pv = a.plugin_version.to_s
       puts "\t\tPlugin version: #{pv}"
       i = pv.split(".")
@@ -30,7 +30,7 @@ RSpec.describe Rucades do
     end
 
     it "has CSP version available through About class" do
-      a = About.new
+      a = Rucades::About.new
       pv = a.csp_version.to_s
       puts "\t\tCSP version: #{pv}"
       i = pv.split(".")
@@ -40,7 +40,7 @@ RSpec.describe Rucades do
     end
 
     it "handles version-related exceptions" do
-      a = About.new
+      a = Rucades::About.new
       expect { a.csp_version "foo", 99 }.to raise_error(RuntimeError)
     end
   end

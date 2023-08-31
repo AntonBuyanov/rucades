@@ -19,12 +19,12 @@ pre_rb_Attribute::pre_rb_Attribute(void):
 pre_rb_Attribute::pre_rb_Attribute(boost::shared_ptr<CPPCadesCPAttributeObject> other):
       m_pCppCadesImpl(other) { }
 
-pre_rb_OID* pre_rb_Attribute::get_OID(void)
+pre_rb_OID pre_rb_Attribute::get_OID(void)
 {
     boost::shared_ptr<CPPCadesCPOIDObject> pCPPCadesCPOID(new CPPCadesCPOIDObject());
     hr_method_check(m_pCppCadesImpl->get_OID(pCPPCadesCPOID));
 
-    return new pre_rb_OID(pCPPCadesCPOID);
+    return pre_rb_OID(pCPPCadesCPOID);
 }
 
 std::string pre_rb_Attribute::get_value(void)
@@ -96,12 +96,12 @@ void pre_rb_Attribute::set_value_encoding(long type)
     hr_method_check(m_pCppCadesImpl->put_ValueEncoding(static_cast<CAPICOM_ENCODING_TYPE>(type)));
 }
 
-void pre_rb_Attribute::define_ruby_class(void)
+void pre_rb_Attribute::define_ruby_class(VALUE module)
 {
   Data_Type<pre_rb_Attribute> rb_cAttribute =
-    define_class<pre_rb_Attribute>("Attribute")
+    define_class_under<pre_rb_Attribute>(module, "Attribute")
     .define_constructor(Constructor<pre_rb_Attribute>())
-    .define_method("oid", &pre_rb_Attribute::get_OID, Return().takeOwnership())
+    .define_method("oid", &pre_rb_Attribute::get_OID)
     .define_method("name", &pre_rb_Attribute::get_name)
     .define_method("name=", &pre_rb_Attribute::set_name)
     .define_method("value", &pre_rb_Attribute::get_value)

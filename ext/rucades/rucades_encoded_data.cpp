@@ -30,10 +30,10 @@ std::string pre_rb_EncodedData::format(bool multiline)
     return std::string(CW2A(sValue.GetString(), CP_UTF8));
 }
 
-void pre_rb_EncodedData::define_ruby_class(void)
+void pre_rb_EncodedData::define_ruby_class(VALUE module)
 {
   Data_Type<pre_rb_EncodedData> rb_cEncodedData =
-    define_class<pre_rb_EncodedData>("EncodedData")
+    define_class_under<pre_rb_EncodedData>(module, "EncodedData")
     .define_constructor(Constructor<pre_rb_EncodedData>())
     .define_method("format", &pre_rb_EncodedData::format, Arg("multiline") = false)
     .define_method("value", &pre_rb_EncodedData::value, Arg("type") = static_cast<long>(CAPICOM_ENCODE_BASE64));

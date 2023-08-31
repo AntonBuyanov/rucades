@@ -8,7 +8,7 @@
 RSpec.describe Rucades do
   describe "Attribute" do
     it "has name and value properties" do
-      attrb = Attribute.new
+      attrb = Rucades::Attribute.new
 
       attrb.value_type = Rucades::CAPICOM_ENCODE_BINARY
       expect(attrb.value_type).to eq(Rucades::CAPICOM_ENCODE_BINARY)
@@ -26,7 +26,7 @@ RSpec.describe Rucades do
     end
 
     it "maintains encoding" do
-      attrb = Attribute.new
+      attrb = Rucades::Attribute.new
 
       attrb.name = Rucades::CADESCOM_AUTHENTICATED_ATTRIBUTE_DOCUMENT_DESCRIPTION
       attrb.value_type = Rucades::CAPICOM_ENCODE_BINARY
@@ -38,7 +38,7 @@ RSpec.describe Rucades do
     end
 
     it "has OID property" do
-      attrb = Attribute.new
+      attrb = Rucades::Attribute.new
       attrb.oid.name = Rucades::CAPICOM_OID_BASIC_CONSTRAINTS2_EXTENSION
 
       expect(attrb.oid.value).to eq("2.5.29.19")
@@ -46,7 +46,7 @@ RSpec.describe Rucades do
     end
 
     it "throws an error if used in incorrevt state" do
-      attrb = Attribute.new
+      attrb = Rucades::Attribute.new
       expect { attrb.value = "Test description" }.to raise_error(RuntimeError)
     end
   end

@@ -17,13 +17,14 @@ class pre_rb_Certificates {
     pre_rb_Certificates(void);
     pre_rb_Certificates(boost::shared_ptr<CryptoPro::PKI::CAdES::CPPCadesCPCertificatesObject> pCppCadesCertificates);
     long get_count(void);
-    pre_rb_Certificate* get_item(long index);
+    pre_rb_Certificate get_item(long index);
 
-    pre_rb_Certificates* internal_find_query_long(long type, long query, bool valid_only);
-    pre_rb_Certificates* internal_find_query_string(long type, std::string query, bool valid_only);
+    pre_rb_Certificates internal_find_query_long(long type, long query, bool valid_only);
+    pre_rb_Certificates internal_find_query_string(long type, std::string query, bool valid_only);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 
+    friend class pre_rb_SignedData;
     friend class pre_rb_Store;
 };
 }

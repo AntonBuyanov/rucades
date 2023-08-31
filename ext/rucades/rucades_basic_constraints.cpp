@@ -53,10 +53,10 @@ long pre_rb_BasicConstraints::get_path_len_constraint(void)
     return dwPathLenConst;
 }
 
-void pre_rb_BasicConstraints::define_ruby_class(void)
+void pre_rb_BasicConstraints::define_ruby_class(VALUE module)
 {
     Data_Type<pre_rb_BasicConstraints> rb_cBasicConstraints =
-        define_class<pre_rb_BasicConstraints>("BasicConstraints")
+        define_class_under<pre_rb_BasicConstraints>(module, "BasicConstraints")
         .define_constructor(Constructor<pre_rb_BasicConstraints>())
         .define_method("ceritficate_authority?", &pre_rb_BasicConstraints::is_ceritficate_authority)
         .define_method("critical?", &pre_rb_BasicConstraints::is_critical)

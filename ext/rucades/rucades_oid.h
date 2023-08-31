@@ -22,7 +22,7 @@ class pre_rb_OID {
     std::string get_friendly_name(void);
     void set_friendly_name(std::string& sFriendlyName);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 
     friend class pre_rb_PublicKey;
 };

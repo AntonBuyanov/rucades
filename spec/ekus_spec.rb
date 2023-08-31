@@ -7,7 +7,7 @@
 RSpec.describe Rucades do
   describe "EKUs" do
     it "has constructor and getters" do
-      ekus = EKUs.new
+      ekus = Rucades::EKUs.new
       expect(ekus.count).to eq(0)
       expect { ekus[0] }.to raise_error(RuntimeError)
     end

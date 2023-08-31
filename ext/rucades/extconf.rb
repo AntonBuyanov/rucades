@@ -52,12 +52,22 @@ $srcs = [
   "rucades_eku.cpp",
   "rucades_ekus.cpp",
   "rucades_encoded_data.cpp",
+  "rucades_enveloped_data.cpp",
   "rucades_extended_key_usage.cpp",
+  "rucades_hashed_data.cpp",
   "rucades_key_usage.cpp",
   "rucades_oid.cpp",
   "rucades_private_key.cpp",
   "rucades_public_key.cpp",
+  "rucades_raw_signature.cpp",
+  "rucades_recipients.cpp",
+  "rucades_signature_status.cpp",
+  "rucades_signed_data.cpp",
+  "rucades_signed_xml.cpp",
+  "rucades_signer.cpp",
+  "rucades_signers.cpp",
   "rucades_store.cpp",
+  "rucades_symmetric_algorithm.cpp",
   "rucades_version.cpp"
 ]
 

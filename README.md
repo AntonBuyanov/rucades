@@ -2,8 +2,17 @@
 
 Вас приветсвует Rucades - CAdESCOM Ruby binding !
 Gem реализует интерфейс, аналогичный [CAdESCOM](https://docs.cryptopro.ru/cades/reference/cadescom)
+и разработан путём повторения функциональности [pycades](https://docs.cryptopro.ru/cades/pycades)
 
 [![Build-and-test](https://github.com/maxirmx/rucades/actions/workflows/main.yml/badge.svg)](https://github.com/maxirmx/rucades/actions/workflows/main.yml)
+
+## Совместимость
+
+Gem тестировался в следующем окружении:
+* Ububtu 20, 22
+* Ruby 2.7. 3.0, 3.1, 3.2
+
+Вероятно, Gem совместим с другими вариантами Linux, однако КриптоПро ЭЦП SDK доступно только для Ubuntu.
 
 ## Установка
 
@@ -35,14 +44,33 @@ gem 'rucades', git: 'https://github.com/maxirmx/rucades'
 ```
 bundle install
 ```
+!!! Компиляция расширения может занять 10-15 минут. Во время компиляции Ruby не выводит никаких сообщений. !!!
 
-## Usage
+## Использование
 
-TODO: Write usage instructions here
+В каталоге samples есть 4 примера, унаследованные от peycades:
+* encrypt - decrypt
+* sign - verify signature
+* sign xml document - verify signature
+* sign hash - verify signature
 
-## Участе в разработке
+RSpec обеспечивает покрытие тестами вех классов и примерно 70% функций.
+Однако, следует иметь в виду, что тестируются С++ --> Ruby bindings, а не функциональность.
+ТО есть RSpec проверяет, что функция создалась с нужным имененм и параметрами, но не правильность её работы.
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/maxirmx/rucades.
+## Разработка
+
+Этот Gem использует
+* [bundler](https://bundler.io/guides/getting_started.html) для управления зависимстями
+* [rake](https://ruby.github.io/rake/) для управления сборкой
+* [RSpec](https://rspec.info/) 'to make TDD productive and fun'
+* [Rice](https://jasonroelofs.com/rice/4.x/introduction.html) для генерации Ruby bindings
+
+Чтобы начать разработку, нужно
+* прочитать документацию на Rice
+* установить зависимости, как описано выше в разделе установка
+* ```bundle install```
+* ```rake --tasks```
 
 ## Лицензия
 

@@ -6,7 +6,7 @@
 /pkg/
 /spec/reports/
 /tmp/
-/sample/
+/py-sample/
 *.bundle
 *.so
 *.o

@@ -19,6 +19,6 @@ class pre_rb_Version {
     unsigned int build_version(void);
     std::string to_s(void);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 };
 }

@@ -43,33 +43,33 @@ std::string pre_rb_About::version(void)
   return AtlVersion.GetString();
 }
 
-pre_rb_Version* pre_rb_About::plugin_version(void)
+pre_rb_Version pre_rb_About::plugin_version(void)
 {
   boost::shared_ptr<CryptoPro::PKI::CAdES::CPPVersionObject> p_version;
   hr_method_check(m_pCppCadesImpl->get_PluginVersion(p_version));
-  return new pre_rb_Version(p_version);
+  return pre_rb_Version(p_version);
 }
 
-pre_rb_Version* pre_rb_About::csp_version(std::string prov_name, long prov_type)
+pre_rb_Version pre_rb_About::csp_version(std::string prov_name, long prov_type)
 {
   boost::shared_ptr<CryptoPro::PKI::CAdES::CPPVersionObject> p_version;
   CAtlString provName = CAtlString(CA2CT(CAtlStringA(prov_name.c_str()), CP_UTF8));
 
   hr_method_check(m_pCppCadesImpl->get_CSPVersion(provName, prov_type, p_version));
-  return new pre_rb_Version(p_version);
+  return pre_rb_Version(p_version);
 }
 
-void pre_rb_About::define_ruby_class(void)
+void pre_rb_About::define_ruby_class(VALUE module)
 {
   Data_Type<pre_rb_About> rb_cAbout =
-    define_class<pre_rb_About>("About")
+    define_class_under<pre_rb_About>(module, "About")
     .define_constructor(Constructor<pre_rb_About>())
     .define_method("major_version", &pre_rb_About::major_version)
     .define_method("minor_version", &pre_rb_About::minor_version)
     .define_method("build_version", &pre_rb_About::build_version)
     .define_method("version", &pre_rb_About::version)
-    .define_method("plugin_version", &pre_rb_About::plugin_version, Return().takeOwnership())
-    .define_method("csp_version", &pre_rb_About::csp_version, Return().takeOwnership(),
+    .define_method("plugin_version", &pre_rb_About::plugin_version)
+    .define_method("csp_version", &pre_rb_About::csp_version,
                    Arg("prov_name") = (std::string)"", Arg("prov_type") = (long)75);
 }
 }

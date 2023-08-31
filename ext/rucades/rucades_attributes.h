@@ -14,12 +14,15 @@ class pre_rb_Attributes {
     boost::shared_ptr<CryptoPro::PKI::CAdES::CPPCadesCPAttributesObject> m_pCppCadesImpl;
   public:
     pre_rb_Attributes(void);
+    pre_rb_Attributes(boost::shared_ptr<CryptoPro::PKI::CAdES::CPPCadesCPAttributesObject> other);
     void add(pre_rb_Attribute& attrb);
     void clear(void);
     long get_count(void);
-    pre_rb_Attribute* get_item(long index);
+    pre_rb_Attribute get_item(long index);
     void remove(long index);
 
-    static void define_ruby_class();
+    static void define_ruby_class(VALUE module);
+
+    friend class pre_rb_Signer;
 };
 }

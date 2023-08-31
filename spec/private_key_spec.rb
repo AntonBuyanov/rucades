@@ -7,7 +7,7 @@
 RSpec.describe Rucades do
   describe "PrivateKey" do
     it "has constructor" do
-      pk = PrivateKey.new
+      pk = Rucades::PrivateKey.new
       expect { pk.container_name }.to raise_error(RuntimeError)
     end
   end

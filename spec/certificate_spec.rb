@@ -8,12 +8,12 @@
 RSpec.describe Rucades do
   describe "Certificate" do
     it "has constructor" do
-      crt = Certificate.new
+      crt = Rucades::Certificate.new
       expect { crt.has_private_key? }.to raise_error(RuntimeError)
     end
 
     it "has import and export methods" do
-      crt = Certificate.new
+      crt = Rucades::Certificate.new
       File.open(File.join(__dir__, "certificates", "certnew.p7b"), "rb") do |f|
         crt.import(f.read)
         f.rewind
@@ -39,7 +39,7 @@ RSpec.describe Rucades do
     end
 
     it "has subject_name method" do
-      crt = Certificate.new
+      crt = Rucades::Certificate.new
       File.open(File.join(__dir__, "certificates", "certnew.p7b"), "rb") do |f|
         crt.import(f.read)
       end
@@ -47,7 +47,7 @@ RSpec.describe Rucades do
     end
 
     it "has issuer_name method" do
-      crt = Certificate.new
+      crt = Rucades::Certificate.new
       File.open(File.join(__dir__, "certificates", "certnew.p7b"), "rb") do |f|
         crt.import(f.read)
       end
@@ -55,7 +55,7 @@ RSpec.describe Rucades do
     end
 
     it "has serial_number method" do
-      crt = Certificate.new
+      crt = Rucades::Certificate.new
       File.open(File.join(__dir__, "certificates", "certnew.p7b"), "rb") do |f|
         crt.import(f.read)
       end
@@ -63,7 +63,7 @@ RSpec.describe Rucades do
     end
 
     it "has thumbprint method" do
-      crt = Certificate.new
+      crt = Rucades::Certificate.new
       File.open(File.join(__dir__, "certificates", "certnew.p7b"), "rb") do |f|
         crt.import(f.read)
       end
@@ -71,15 +71,7 @@ RSpec.describe Rucades do
     end
 
     it "has version method" do
-      crt = Certificate.new
-      File.open(File.join(__dir__, "certificates", "certnew.p7b"), "rb") do |f|
-        crt.import(f.read)
-      end
-      expect(crt.version).to eq(3)
-    end
-
-    it "has version method" do
-      crt = Certificate.new
+      crt = Rucades::Certificate.new
       File.open(File.join(__dir__, "certificates", "certnew.p7b"), "rb") do |f|
         crt.import(f.read)
       end
@@ -87,7 +79,7 @@ RSpec.describe Rucades do
     end
 
     it "has valid_from_date method" do
-      crt = Certificate.new
+      crt = Rucades::Certificate.new
       File.open(File.join(__dir__, "certificates", "certnew.p7b"), "rb") do |f|
         crt.import(f.read)
       end
@@ -95,7 +87,7 @@ RSpec.describe Rucades do
     end
 
     it "has valid_to_date method" do
-      crt = Certificate.new
+      crt = Rucades::Certificate.new
       File.open(File.join(__dir__, "certificates", "certnew.p7b"), "rb") do |f|
         crt.import(f.read)
       end
@@ -103,10 +95,11 @@ RSpec.describe Rucades do
     end
 
     it "has has_private_key? method" do
-      crt = Certificate.new
+      crt = Rucades::Certificate.new
       File.open(File.join(__dir__, "certificates", "certnew.p7b"), "rb") do |f|
         crt.import(f.read)
       end
+      expect(crt.has_private_key?).to be(false)
     end
   end
 end

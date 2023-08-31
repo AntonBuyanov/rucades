@@ -20,7 +20,7 @@ class pre_rb_BasicConstraints {
     bool is_present(void);
     long get_path_len_constraint(void);
 
-    static void define_ruby_class(void);
+    static void define_ruby_class(VALUE module);
 
     friend class pre_rb_Certificate;
 };
