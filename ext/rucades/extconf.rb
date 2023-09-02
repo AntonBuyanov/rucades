@@ -5,6 +5,7 @@
 # This file is a part of rucades
 
 require "mkmf-rice"
+require "fiddle"
 
 # rubocop:disable Style/GlobalVars
 
@@ -20,7 +21,6 @@ INCDIRS = [
 
 CXXDEFS = [
   " -DUNIX",
-  " -DSIZEOF_VOID_P=8",
   " -fpermissive",
   " -Wno-narrowing",
   " -Wno-deprecated-declarations",
@@ -28,10 +28,26 @@ CXXDEFS = [
   " -DLEGACY_FORMAT_MESSAGE_IMPL"
 ].freeze
 
-INCDIRS.each { |dir| $INCFLAGS << " -I#{dir}" }
-CXXDEFS.each { |df| $defs << df }
+ARM64_CXXDEFS = [
+  "-DLINUX",
+  "-DPROC_TYPE_ARM64=7",
+  "-DPROCESSOR_TYPE=PROC_TYPE_ARM64",
+  "-Wno-write-strings"
+].freeze
 
-$DLDFLAGS << " -L/opt/cprocsp/lib/amd64"
+INCDIRS.each { |dir| $INCFLAGS << " -I#{dir}" }
+
+$defs << " -DSIZEOF_VOID_P=#{Fiddle::SIZEOF_VOIDP}"
+
+CXXDEFS.each { |df| $defs << df }
+ARM64_CXXDEFS.each { |df| $defs << df } if RUBY_PLATFORM =~ /aarch64-linux/
+
+if RUBY_PLATFORM =~ /aarch64-linux/ 
+  $DLDFLAGS << " -L/opt/cprocsp/lib/aarch64"  
+else
+  $DLDFLAGS << " -L/opt/cprocsp/lib/amd64"
+end
+
 $LOCAL_LIBS << " -lcppcades"
 
 $srcs = [
