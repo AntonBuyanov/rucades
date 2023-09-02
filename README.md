@@ -19,13 +19,13 @@ Gem тестировался в следующем окружении:
 * Установите пакеты  для сборки
 ```
     sudo apt update
-    sudo apt install cmake build-essential libboost-all-dev ruby-dev unzip tar git wget
+    sudo apt install cmake build-essential libboost-all-dev ruby-dev tar git wget libffi-dev
     sudo gem install bundler
 ```
 * Скачайте архив с [КриптоПро CSP](https://cryptopro.ru/products/csp/downloads) для Вашей архитектуры, распакуйте его и установите КриптоПро CSP
   Например,
 
-  * для amd64 debian
+_для amd64_
 ```
     wget -O  linux-arm64_deb.tgz https://cryptopro.ru/sites/default/files/private/csp/50/11455/linux-arm64_deb.tgz
     tar xvf linux-arm64_deb.tgz
@@ -33,7 +33,7 @@ Gem тестировался в следующем окружении:
     sudo ./install.sh
 ```
 
-  * для arm64 debian
+_для arm64_
 ```
     wget -O  linux-arm64_deb.tgz https://cryptopro.ru/sites/default/files/private/csp/50/11455/linux-arm64_deb.tgz
     tar xvf linux-arm64_deb.tgz
@@ -44,16 +44,16 @@ Gem тестировался в следующем окружении:
 ```
 sudo apt install ./lsb-cprocsp-devel_5.0*.deb
 ```
-* Скачайте архив с [КриптоПро ЭЦП SDK](https://cryptopro.ru/products/cades/downloads) , распакуйте его и установите пакет cprocsp-pki-cades (версия не ниже 2.0.14071)
+* Скачайте архив с [КриптоПро ЭЦП SDK](https://cryptopro.ru/products/cades/downloads), распакуйте его и установите пакет cprocsp-pki-cades (версия не ниже 2.0.14071)
 
-  * для amd64 debian
+_для amd64_
 ```
    tar xvf cades-linux-amd64.tar.gz
    cd cades-linux-amd64
    sudo apt install ./cprocsp-pki-cades*.deb
 ```
 
-  * для arm64 debian
+_для arm64_
 ```
    tar xvf cades-linux-arm64.tar.gz
    cd cades-linux-arm64
@@ -74,6 +74,7 @@ bundle install
 !!! Компиляция расширения может занять 10-15 минут. Во время компиляции Ruby не выводит никаких сообщений. !!!
 
 * Проверка установки
+
 Скрипт _test.rb_ 
 ```
 require 'rucades'
@@ -99,11 +100,13 @@ CADES SDK version: 2.0.14892
 
 Для запуска примеров необходим сертификат с привязкой к закрытому ключу.
 Тестовый сертификат можно установить с помощью команды:
-* для amd64 
+
+_для amd64_ 
 ```
 /opt/cprocsp/bin/amd64/cryptcp -createcert -dn "CN=test" -provtype 80 -cont '\\.\HDIMAGE\test' -ca https://cryptopro.ru/certsrv
 ```
-* для arm64
+
+_для arm64_
 ```
 /opt/cprocsp/bin/aarch64/cryptcp -createcert -dn "CN=test" -provtype 80 -cont '\\.\HDIMAGE\test' -ca https://cryptopro.ru/certsrv
 ```
