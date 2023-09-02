@@ -71,6 +71,22 @@ bundle install
 ```
 !!! Компиляция расширения может занять 10-15 минут. Во время компиляции Ruby не выводит никаких сообщений. !!!
 
+* Проверка установки
+Скрипт _test.rb_ 
+```
+require 'rucades'
+puts "CADES SDK version: #{Rucades::About.new.version.to_s}"
+```
+Запуск
+```
+bundle exec ruby test.rb
+```
+
+Ожидаемый результат (или что-то похожее)
+```
+CADES SDK version: 2.0.14892
+```
+
 ## Использование
 
 В каталоге samples есть 4 примера, унаследованные от pycades:
@@ -78,6 +94,17 @@ bundle install
 * sign - verify signature
 * sign xml document - verify signature
 * sign hash - verify signature
+
+Для запуска примеров необходим сертификат с привязкой к закрытому ключу.
+Тестовый сертификат можно установить с помощью команды:
+* для amd64 
+```
+/opt/cprocsp/bin/amd64/cryptcp -createcert -dn "CN=test" -provtype 80 -cont '\\.\HDIMAGE\test' -ca https://cryptopro.ru/certsrv
+```
+* для arm64
+```
+/opt/cprocsp/bin/aarch64/cryptcp -createcert -dn "CN=test" -provtype 80 -cont '\\.\HDIMAGE\test' -ca https://cryptopro.ru/certsrv
+```
 
 RSpec обеспечивает покрытие тестами всех классов и примерно 70% функций.
 Однако, следует иметь в виду, что тестируются С++ --> Ruby bindings, а не функциональность.
