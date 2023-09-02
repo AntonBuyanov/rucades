@@ -24,7 +24,8 @@ Gem тестировался в следующем окружении:
 ```
 * Скачайте архив с [КриптоПро CSP](https://cryptopro.ru/products/csp/downloads) для Вашей архитектуры, распакуйте его и установите КриптоПро CSP
   Например,
-  ** для amd64 debian
+
+  * для amd64 debian
 ```
     wget -O  linux-arm64_deb.tgz https://cryptopro.ru/sites/default/files/private/csp/50/11455/linux-arm64_deb.tgz
     tar xvf linux-arm64_deb.tgz
@@ -32,7 +33,7 @@ Gem тестировался в следующем окружении:
     sudo ./install.sh
 ```
 
-  ** для arm64 debian
+  * для arm64 debian
 ```
     wget -O  linux-arm64_deb.tgz https://cryptopro.ru/sites/default/files/private/csp/50/11455/linux-arm64_deb.tgz
     tar xvf linux-arm64_deb.tgz
@@ -44,14 +45,15 @@ Gem тестировался в следующем окружении:
 sudo apt install ./lsb-cprocsp-devel_5.0*.deb
 ```
 * Скачайте архив с [КриптоПро ЭЦП SDK](https://cryptopro.ru/products/cades/downloads) , распакуйте его и установите пакет cprocsp-pki-cades (версия не ниже 2.0.14071)
- ** для amd64 debian
+
+  * для amd64 debian
 ```
    tar xvf cades-linux-amd64.tar.gz
    cd cades-linux-amd64
    sudo apt install ./cprocsp-pki-cades*.deb
 ```
 
-  ** для arm64 debian
+  * для arm64 debian
 ```
    tar xvf cades-linux-arm64.tar.gz
    cd cades-linux-arm64
