@@ -34,4 +34,5 @@ Gem::Specification.new do |spec|
   spec.extensions = ["ext/rucades/extconf.rb"]
 
   spec.add_dependency "rice", "~> 4.1"
+  spec.add_dependency "fiddle", "~> 1"
 end

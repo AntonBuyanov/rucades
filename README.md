@@ -18,45 +18,102 @@ Gem тестировался в следующем окружении:
 
 * Установите пакеты  для сборки
 ```
-    sudo apt install cmake build-essential libboost-all-dev ruby-dev unzip
+    sudo apt update
+    sudo apt install cmake build-essential libboost-all-dev ruby-dev tar git wget libffi-dev
+    sudo gem install bundler
 ```
-* Скачайте архив с [КриптоПро CSP](https://cryptopro.ru/products/csp/downloads) , распакуйте его и установите КриптоПро CSP
+* Скачайте архив с [КриптоПро CSP](https://cryptopro.ru/products/csp/downloads) для Вашей архитектуры, распакуйте его и установите КриптоПро CSP
+  Например,
+
+_для amd64_
 ```
-    tar xvf linux-amd64_deb.tgz
-    cd linux-amd64_deb
+    wget -O  linux-arm64_deb.tgz https://cryptopro.ru/sites/default/files/private/csp/50/11455/linux-arm64_deb.tgz
+    tar xvf linux-arm64_deb.tgz
+    cd linux-arm64_deb
+    sudo ./install.sh
+```
+
+_для arm64_
+```
+    wget -O  linux-arm64_deb.tgz https://cryptopro.ru/sites/default/files/private/csp/50/11455/linux-arm64_deb.tgz
+    tar xvf linux-arm64_deb.tgz
+    cd linux-arm64_deb
     sudo ./install.sh
 ```
 * Установите пакет cprocsp-devel
 ```
 sudo apt install ./lsb-cprocsp-devel_5.0*.deb
 ```
-* Скачайте архив с [КриптоПро ЭЦП SDK](https://cryptopro.ru/products/cades/downloads) , распакуйте его и установите пакет cprocsp-pki-cades (версия не ниже 2.0.14071)
+* Скачайте архив с [КриптоПро ЭЦП SDK](https://cryptopro.ru/products/cades/downloads), распакуйте его и установите пакет cprocsp-pki-cades (версия не ниже 2.0.14071)
+
+_для amd64_
 ```
-tar xvf cades_linux_amd64.tar.gz
-cd cades_linux_amd64
-sudo apt install ./cprocsp-pki-cades*.deb
+   tar xvf cades-linux-amd64.tar.gz
+   cd cades-linux-amd64
+   sudo apt install ./cprocsp-pki-cades*.deb
+```
+
+_для arm64_
+```
+   tar xvf cades-linux-arm64.tar.gz
+   cd cades-linux-arm64
+   sudo apt install ./cprocsp-pki-cades*.deb
 ```
 * Добавьте в Gemfile Вашего проекта следующую строку:
 ```
 gem 'rucades', git: 'https://github.com/maxirmx/rucades'
 ```
+Замечание. Репозиторий 'https://github.com/maxirmx/rucades' - приватный. Чтобы bundler имел к нему доступ,
+должен быть настроен [OAuth токен](https://docs.github.com/ru/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens)
+и конфигурацию: ```bundle config GITHUB__COM myoauthtoken:x-oauth-basic```
+
 * Выполните
 ```
 bundle install
 ```
 !!! Компиляция расширения может занять 10-15 минут. Во время компиляции Ruby не выводит никаких сообщений. !!!
 
+* Проверка установки
+
+Скрипт _test.rb_
+```
+require 'rucades'
+puts "CADES SDK version: #{Rucades::About.new.version.to_s}"
+```
+Запуск
+```
+bundle exec ruby test.rb
+```
+
+Ожидаемый результат (или что-то похожее)
+```
+CADES SDK version: 2.0.14892
+```
+
 ## Использование
 
-В каталоге samples есть 4 примера, унаследованные от peycades:
+В каталоге samples есть 4 примера, унаследованные от pycades:
 * encrypt - decrypt
 * sign - verify signature
 * sign xml document - verify signature
 * sign hash - verify signature
 
-RSpec обеспечивает покрытие тестами вcех классов и примерно 70% функций.
+Для запуска примеров необходим сертификат с привязкой к закрытому ключу.
+Тестовый сертификат можно установить с помощью команды:
+
+_для amd64_
+```
+/opt/cprocsp/bin/amd64/cryptcp -createcert -dn "CN=test" -provtype 80 -cont '\\.\HDIMAGE\test' -ca https://cryptopro.ru/certsrv
+```
+
+_для arm64_
+```
+/opt/cprocsp/bin/aarch64/cryptcp -createcert -dn "CN=test" -provtype 80 -cont '\\.\HDIMAGE\test' -ca https://cryptopro.ru/certsrv
+```
+
+RSpec обеспечивает покрытие тестами всех классов и примерно 70% функций.
 Однако, следует иметь в виду, что тестируются С++ --> Ruby bindings, а не функциональность.
-ТО есть RSpec проверяет, что функция создалась с нужным имененм и параметрами, но не правильность её работы.
+То есть RSpec проверяет, что функция создалась с нужным имененм и параметрами, но не правильность её работы.
 
 ## Разработка
 
@@ -66,7 +123,7 @@ RSpec обеспечивает покрытие тестами вcех клас�
 * [RSpec](https://rspec.info/) 'to make TDD productive and fun'
 * [Rice](https://jasonroelofs.com/rice/4.x/introduction.html) для генерации Ruby bindings
 
-Чтобы начать разработку, нужно
+Чтобы начать разработку нужно:
 * прочитать документацию на Rice
 * установить зависимости, как описано выше в разделе установка
 * ```bundle install```
