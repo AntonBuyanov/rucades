@@ -1,6 +1,7 @@
 # Rucades
 
-Вас приветсвует Rucades - CAdESCOM Ruby binding !
+Вас приветсвует Rucades - CAdESCOM Ruby binding!
+
 Gem реализует интерфейс, аналогичный [CAdESCOM](https://docs.cryptopro.ru/cades/reference/cadescom)
 и разработан путём повторения функциональности [pycades](https://docs.cryptopro.ru/cades/pycades)
 
