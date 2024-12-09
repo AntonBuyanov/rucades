@@ -17,7 +17,7 @@
 #endif
 
 
-#include "boost/shared_ptr.hpp"
+//#include "boost/shared_ptr.hpp"
 #include <iostream>
 #include <memory> //Этот хедер тут нужен что бы компилить с новыми версиями libstdc++
                   //в них есть конфликт с __in и __out макросами которые определены в MS хедерах.
