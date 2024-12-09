@@ -1,7 +1,3 @@
-// Copyright (c) 2023 Maxim [maxirmx] Samsonov (https://sw.consulting)
-// All rights reserved.
-// This file is a part of rucades
-
 #include <rice/rice.hpp>
 #include <rice/stl.hpp>
 
@@ -13,7 +9,7 @@ using namespace CryptoPro::PKI::CAdES;
 
 namespace rucades {
 pre_rb_About::pre_rb_About(void):
-      m_pCppCadesImpl(boost::shared_ptr<CPPCadesAboutObject>(new CPPCadesAboutObject())) { }
+      m_pCppCadesImpl(std::make_shared<CPPCadesAboutObject>()) { }
 
 unsigned int pre_rb_About::major_version(void)
 {
@@ -45,14 +41,16 @@ std::string pre_rb_About::version(void)
 
 pre_rb_Version pre_rb_About::plugin_version(void)
 {
-  boost::shared_ptr<CryptoPro::PKI::CAdES::CPPVersionObject> p_version;
+  // Используем std::shared_ptr вместо boost::shared_ptr
+  std::shared_ptr<CryptoPro::PKI::CAdES::CPPVersionObject> p_version = std::make_shared<CryptoPro::PKI::CAdES::CPPVersionObject>();
   hr_method_check(m_pCppCadesImpl->get_PluginVersion(p_version));
   return pre_rb_Version(p_version);
 }
 
 pre_rb_Version pre_rb_About::csp_version(std::string prov_name, long prov_type)
 {
-  boost::shared_ptr<CryptoPro::PKI::CAdES::CPPVersionObject> p_version;
+  // Используем std::shared_ptr вместо boost::shared_ptr
+  std::shared_ptr<CryptoPro::PKI::CAdES::CPPVersionObject> p_version = std::make_shared<CryptoPro::PKI::CAdES::CPPVersionObject>();
   CAtlString provName = CAtlString(CA2CT(CAtlStringA(prov_name.c_str()), CP_UTF8));
 
   hr_method_check(m_pCppCadesImpl->get_CSPVersion(provName, prov_type, p_version));
