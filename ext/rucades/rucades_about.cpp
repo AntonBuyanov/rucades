@@ -12,8 +12,24 @@ using namespace Rice;
 using namespace CryptoPro::PKI::CAdES;
 
 namespace rucades {
-pre_rb_About::pre_rb_About(void):
-      m_pCppCadesImpl(boost::shared_ptr<CPPCadesAboutObject>(new CPPCadesAboutObject())) { }
+
+template<typename T>
+typename std::shared_ptr<T> to_std(typename boost::shared_ptr<T> const& p)
+{
+    return std::shared_ptr<T>(
+        p.get(),
+        boost::bind(&do_release<T>, p, _1)
+    );
+}
+
+// Декларация функции do_release, вызываемой при удалении объекта.
+template<typename T>
+void do_release(typename boost::shared_ptr<T> const& p, T* ptr)
+{
+}
+
+pre_rb_About::pre_rb_About(void)
+    : m_pCppCadesImpl(to_std(boost::shared_ptr<CPPCadesAboutObject>(new CPPCadesAboutObject()))) { }
 
 unsigned int pre_rb_About::major_version(void)
 {
